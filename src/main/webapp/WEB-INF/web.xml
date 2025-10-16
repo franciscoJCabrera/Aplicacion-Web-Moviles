@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <!-- Enable verbose error messages -->
+        <param-value>Development</param-value>
+        <!-- Other values: Production, SystemTest, UnitTest -->
+    </context-param>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsf</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+
+    <!-- Creation of Datasource in Application Server -->
+    <data-source>
+        <name>java:global/jdbc/mobile</name>
+        <class-name>org.h2.jdbcx.JdbcDataSource</class-name>
+        <url>jdbc:h2:~/h2db/mobile;MODE=LEGACY;AUTO_SERVER=TRUE</url>
+        <user>dawuser</user>
+        <password>dawuser</password>
+        <initial-pool-size>2</initial-pool-size>
+        <max-pool-size>10</max-pool-size>
+        <min-pool-size>5</min-pool-size>
+    </data-source>
+
+    <!--Configuramos Cookie de sesion-->
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>false</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+
+    <!--Roles de usuarios que se van a utilizar en las reglas-->
+    <security-role>
+        <role-name>USUARIOS</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ADMINISTRADORES</role-name>
+    </security-role>
+    <!--Reglas de control de acceso: security-constraint, puede haber varias -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Usuarios identificados</web-resource-name>
+            <url-pattern>/usuario/PaginaPerfil.xhtml</url-pattern>
+            <url-pattern>/subasta/verSubastas.xhtml</url-pattern>
+            <url-pattern>/subasta/subasta.jsp</url-pattern>
+            <url-pattern>/usuario/PaginaPerfil.xhtml</url-pattern>
+            <url-pattern>/api_movil.html</url-pattern>
+            <url-pattern>/api_usuario.html</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>USUARIOS</role-name>
+            <role-name>ADMINISTRADORES</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <mime-mapping>
+        <extension>eot</extension>
+        <mime-type>application/vnd.ms-fontobject</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff</extension>
+        <mime-type>application/font-woff</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>woff2</extension>
+        <mime-type>application/font-woff2</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>ttf</extension>
+        <mime-type>application/x-font-ttf</mime-type>
+    </mime-mapping>
+
+
+</web-app>

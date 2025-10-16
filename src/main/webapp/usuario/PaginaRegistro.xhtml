@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Registrar Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</h:head>
+
+<!--Define el estilo que se tiene en la pagina-->
+
+<ui:composition template="/WEB-INF/Template/plantillaGeneral.xhtml">
+
+    <!--Definimos el cuerpo de la vista-->
+    <ui:define name="cuerpo">
+    <div class="container-fluid text-center bg-dark-subtle">   <!--Esto es para marcar el margen-->
+        <h:form class="form-signin container-fluid p-3" id="vistaRegistro"> <!--Esto es para marcar el margen-->
+            <p:growl id="messages" showDetail="false" />
+
+            <h4 class="mb-3">Registro de un nuevo usuario</h4>
+                <div class="row g-3">
+                    <!-- Seccion del Nombre del usuario -->
+                    <div class="col-sm-6">
+                        <h:outputLabel for="Nombre" class="form-label" value="Nombre"/>
+                        <p:inputText class="form-control" id="Nombre" type="text" value="#{RegistroControl.usuario.nombre}"  required="true"
+                        requiredMessage="Se debe de introducir un nombre al usuario"/>
+                    </div>
+
+                    <!--Seccion de los Apellidos del Usuario-->
+                    <div class="col-sm-6">
+                        <h:outputLabel for="Apellidos" class="form-label" value="Apellidos"/>
+                        <p:inputText type="text" class="form-control" id="Apellidos" value="#{RegistroControl.usuario.apellidos}" required="true"
+                        requiredMessage="Se debe de introducir unos apellidos al usuario"/>
+
+                    </div>
+
+                    <!--Seccion de la Contraseña del Usuario-->
+                    <div class="col-sm-6">
+                        <h:outputLabel for="Contraseña" class="form-label" value="Contraseña"/>
+                        <p:inputText type="password" class="form-control" id="Contraseña" value="#{RegistroControl.usuario.contrasenia}" required="true"
+                                     requiredMessage="Se debe de introducir una contraseña"/>
+                    </div>
+
+                    <!--Seccion del DNI del Usuario-->
+                    <div class="col-sm-6">
+                        <h:outputLabel for="DNI" class="form-label" value="DNI"/>
+                        <p:inputText  class="form-control" id="DNI" value="#{RegistroControl.usuario.dni}" required="true" p:placeholder="XXXXXXXXM"
+                        requiredMessage="Se debe de introducir un DNI para el usuario"/>
+                    </div>
+
+                    <!--Seccion del Numero de Telefono del Usuario-->
+                    <div class="col-sm-6">
+                        <h:outputLabel for="Telefono" class="form-label" value="Numero de Telefono"/>
+                        <p:inputText type="text" class="form-control" id="Telefono" value="#{RegistroControl.usuario.numeroTelefono}" required="true"
+                        requiredMessage="Se debe de introducir un numero de telefono para contactar con el usuario"/>
+
+                    </div>
+
+                    <!--Seccion del Correo Electronico-->
+                    <div class="col-12">
+                        <h:outputLabel for="email" class="form-label" value="Correo Electronico"/>
+                        <div class="input-group has-validation">
+                            <span class="input-group-text">@</span>
+                            <p:inputText type="text" class="form-control" id="email" required="true" value="#{RegistroControl.usuario.correoElectronico}" placeholder="name@gmail.com--name@hotmail.es/com--name@red.ujaen.es"
+                            requiredMessage="Se debe de introducir un correo electronico para el usuario"/>
+                        </div>
+                    </div>
+
+                    <!--Seccion del Nombre de Usuario-->
+                    <div class="col-12" id="nombreUsuario">
+                        <h:outputLabel for="NobrePilaUsuario" class="form-label" value="Nombre de Usuario"/>
+                        <p:inputText type="text" class="form-control" id="NobrePilaUsuario" required="true" value="#{RegistroControl.usuario.nombreUsuario}"
+                        requiredMessage="Se dede de introducir un nombre de usuario"/>
+
+                    </div>
+
+                    <!--Seccion de la direccion de domicilio del usuario-->
+                    <div class="col-12">
+                        <h:outputLabel for="Direccion" class="form-label" value="Direccion"/>
+                        <p:inputText type="text" class="form-control" id="Direccion" required="true" value="#{RegistroControl.usuario.direccion}"
+                        requiredMessage="Se debe de introducir la direccion del usuario"/>
+
+                    </div>
+
+                    <!--Seccion para elegir el Pais-->
+                    <div class="col-md-5">
+                        <h:outputLabel for="paises" class="form-label" value="Pais"/>
+                        <p:selectOneMenu id="paises" name="pais" class="form-select" value="#{RegistroControl.usuario.pais}">
+                            <f:selectItem itemLabel="" itemValue=""/>
+                            <f:selectItems value="#{RegistroControl.listadoPaises}"/>
+                            <f:ajax listener="#{RegistroControl.actualizarListadoCiudades()}" render="ciudad"/>
+                        </p:selectOneMenu>
+                        <div class="invalid-feedback">
+                            Please select a valid country.
+                        </div>
+                    </div>
+
+                    <!--Seccion para elegir la ciudad-->
+                    <div class="col-md-4">
+                        <h:outputLabel for="ciudad" class="form-label" value="Ciudad"/>
+                        <p:selectOneMenu id="ciudad" class="form-select" value="#{RegistroControl.usuario.ciudad}">
+                            <f:selectItem itemLabel="" itemValue=""/>
+                            <f:selectItems value="#{RegistroControl.listadoCiudades}"/>
+                        </p:selectOneMenu>
+                        <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div>
+                    </div>
+
+                    <!--Seccion para introducir el Codigo Postal-->
+                    <div class="col-md-3">
+                        <h:outputLabel for="CodigoPostal" class="form-label" value="Codio Postal"/>
+                        <p:inputText type="text" class="form-control" id="CodigoPostal" required="true" value="#{RegistroControl.usuario.codigoPostal}"
+                        requiredMessage="Se debe de introducir un codigo postal para el domicilio del usuario"/>
+                    </div>
+
+                    <!-- Sección para que el usuario introduzca una pequeña descripción -->
+                    <div class="col-md-3">
+                        <label for="descripcionUsuario">Descripción:</label>
+                        <textarea id="descripcionUsuario" name="descripcionUsuario" rows="4" cols="50"/>
+                    </div>
+
+
+                    <!--Ponemos una linea para separar un apartado de otro-->
+                    <hr class="my-4"/>
+
+                    <!--Caja para si el usuario quiere guardar la direccion-->
+                    <div class="form-check">
+                        <p:inputText type="checkbox" class="form-check-input" id="same-address"/>
+                        <h:outputLabel class="form-check-label" for="same-address" value="Guardar direccion"/>
+                    </div>
+
+                    <!--Caja para si el usuario quiere guardar toda la informacion-->
+                    <div class="form-check">
+                        <p:inputText type="checkbox" class="form-check-input" id="save-info"/>
+                        <h:outputLabel class="form-check-label" for="save-info" value="Guardar toda mi informacion"/>
+                    </div>
+
+                    <hr class="my-4"/>
+
+                    <!--Botones para enviar los datos-->
+                    <p:commandButton value="Guardar cambios" action="#{RegistroControl.GuardarCambios()}" class="btn btn-primary" ajax="false" />
+                    <hr class="my-4"/>
+
+                </div>
+
+        </h:form>
+    </div>
+    </ui:define>
+
+</ui:composition>
+</html>

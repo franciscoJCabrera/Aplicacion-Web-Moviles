@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="text-center bg-dark-subtle">
+
+    <!--Nuestra aplicacion web va a tener este mismo estilo siempre, el header negro con las paginas principales como la de bienvenida y el registro-->
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Logo"><use xlink:href="#bootstrap"></use></svg>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+
+                    <!--Al pulsar el boton Pagina principal se nos debe de llevar a su correspondiente pagina, y al pulsar Busqueda igual-->
+                    <li><a href="index.html" class="nav-link px-2 text-white">Pagina principal</a></li>
+                    <li><a href="buscar.jsp" class="nav-link px-2 text-white">Busqueda</a></li>
+                    <li><a href="publicar_subasta.html" class="nav-link px-2 text-white">Subastar</a></li>
+                </ul>
+
+                <div class="text-end">
+
+                    <!--Al pulsar Registrarse debe de llevarnos a su correspondiente vista-->
+                    <a href="Pagina%20de%20Registro.html">
+                        <button type="button" class="btn btn-outline-light me-2">Registrarse</button>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </header>
+
+    <!--Cuerpo principal de la pagina-->
+    <main class="form-signin container-fluid p-3">
+        <form>
+            <!--La imagen de la persona indica que ahi va colocada el logo de nuestra aplicacion web-->
+            <img class="mb-4" src="images/Persona.jpg" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
+
+            <!--Tanto el campo del correo electronico como la contraseña son obligatorios-->
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                <label for="floatingInput">Correo Electrónico</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" size="30" maxlength="10" required>
+                <label for="floatingPassword">Contraseña</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Recordar datos
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesión</button>
+            <p class="mt-5 mb-3 text-muted">© 2023-2024</p>
+        </form>
+    </main>
+
+</body>
+
+</html>
