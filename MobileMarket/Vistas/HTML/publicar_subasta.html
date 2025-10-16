@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <title>BuyPhone</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body class="bg-dark-subtle">
+
+<header class="p-3 text-bg-dark">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Logo"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="index.html" class="nav-link px-2 text-white">Pagina principal</a></li>
+                <li><a href="buscar.jsp" class="nav-link px-2 text-white">Busqueda</a></li>
+                <li><a href="#" class="nav-link px-2 text-secondary">Subastar</a></li>
+
+            </ul>
+
+            <div class="text-end">
+
+                <!--Al pulsar Registrarse debe de llevarnos a su correspondiente vista -->
+                <a href="Pagina%20de%20Registro.html">
+                    <button type="button" class="btn btn-outline-light me-2">Registrarse</button>
+                </a>
+
+                <!--Al pulsar Iniciar Sesion debe de llevarnos a su correspondiente vista -->
+                <a href="InicioSesion.html">
+                    <button type="button" class="btn btn-warning">Iniciar Sesion</button>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+</header>
+
+<div class="p-3 mb-lg-3 text-emphasis-dark">
+
+    <form action="ventana_compra.html" method="post">
+        <div class="mb-3">
+            <label for="phoneMark" class="form-label">Marca</label>
+            <select id="phoneMark" name="MarcaTel" class="form-select" required>
+                <option value="samsung">Samsung</option>
+                <option value="apple">Apple</option>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="pocco">Pocco</option>
+                <option value="onePlus">One Plus</option>
+                <option value="fairFone">FairFone</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="phoneModel" class="form-label">Modelo</label>
+            <select id="phoneModel" name="modeloPhone" class="form-select" required>
+                <option value="samsung">Samsung</option>
+                <option value="apple">Apple</option>
+                <option value="xiaomi">Xiaomi</option>
+                <option value="pocco">Pocco</option>
+                <option value="onePlus">One Plus</option>
+                <option value="fairFone">FairFone</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="imagenes" class="form-label">Imágenes del dispositivo</label>
+            <input class="form-control" id="imagenes" type="file" name="baterry" maxlength="5" value=""  required multiple/>
+        </div>
+
+        <div class="mb-3">
+            <label for="baterry" class="form-label">Capacidad minima de batería</label>
+            <input class="form-control" id="baterry" type="number" name="baterry" maxlength="5" value=""  required/>
+        </div>
+
+        <div class="mb-3">
+            <label for="chargeSpeed" class="form-label">Velocidad de carga</label>
+            <select id="chargeSpeed" name="capacidad_carga" class="form-select" required>
+                <option value="lenta">Lenta</option>
+                <option value="normal" selected>Normal</option>
+                <option value="rapida">Rapida</option>
+                <option value="super_rapida">Super rapida</option>
+                <option value="ultra_rapida">Ultra rápida</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="screenTechnology" class="form-label">Tecnología de la pantalla</label>
+            <select id="screenTechnology" name="tecnologia_pantalla" class="form-select" required>
+                <option value="lcd">LCD</option>
+                <option value="ips">IPS</option>
+                <option value="oled">OLED</option>
+                <option value="amoled">AMOLED</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="tasaRefresco" class="form-label">Tasa de refresco de la pantalla</label>
+            <select id="tasaRefresco" name="tasaRefresco" class="form-select" required>
+                <option value="60hz">60hz</option>
+                <option value="120hz">120hz</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="capacidadAlmacenamiento" class="form-label">Capacidad de almacenamiento</label>
+            <select id="capacidadAlmacenamiento" name="memoriaPrincipal" class="form-select" required>
+                <option value="16gb">16 GB</option>
+                <option value="32gb">32 GB</option>
+                <option value="64gb">64 GB</option>
+                <option value="128gb">128 GB</option>
+                <option value="192gb">192 GB</option>
+                <option value="256gb">256 GB</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="processor" class="form-label">Numero de unidades de procesamiento</label>
+            <input class="form-control" id="processor" type="number" name="processor" maxlength=2 value=""  required/>
+        </div>
+
+        <div class="mb-3">
+            <label for="memoriaPrincipal" class="form-label">Capacidad de memoria RAM</label>
+            <select id="memoriaPrincipal" name="memoriaPrincipal" class="form-select" required>
+                <option value="2gb">2 GB</option>
+                <option value="4gb">4 GB</option>
+                <option value="6gb">6 GB</option>
+                <option value="8gb">8 GB</option>
+                <option value="10gb">10 GB</option>
+                <option value="12gb">12 GB</option>
+                <option value="14gb">14 GB</option>
+                <option value="16gb">16 GB</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Publicar subasta</button>
+    </form>
+
+</div>
+</body>
+
+</html>
+

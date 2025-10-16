@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/Template/plantillaGeneral.xhtml">
+
+    <ui:define name="cuerpo">
+
+    <div class="container-sm px-4 py-3">
+        <h:form class="form-signin container-fluid p-3" method="post" id="inicio_sesion">
+            <p:growl id="messages" showDetail="false" />
+
+            <h2 class="h3 mb-3 fw-normal text-center">Iniciar Sesión</h2>
+
+                <!--Identificacion de usuario-->
+                <h:panelGroup rendered="#{param.error!=null}">
+                    <p class = "alert alert-danger">Error de autenticacion</p>
+                </h:panelGroup>
+
+                <!--Campo del correo electronico-->
+                <div class="mb-3">
+                    <p:inputText type="email" class="form-control" id="correo" value="#{InicioSesionControl.usuario.correoElectronico}" placeholder="name@gmail.com" required="true"
+                    requiredMessage="Debes de introducir un correo electronico"/>
+                    <h:outputLabel for="correo" value="Correo Electrónico" />
+                    <h:message for="correo" />
+                </div>
+
+                <!--Campo de la contraseña-->
+                <div class="mb-3">
+                    <p:inputText type="password" class="form-control" id="contrasenia" value="#{InicioSesionControl.usuario.contrasenia}" placeholder="Password" required="true"
+                                 requiredMessage="Debes de introducir una contraseña "/>
+                    <h:outputLabel for="contrasenia" value="Contraseña" />
+                </div>
+
+                <!--Ponemos un checkBox por si el usuario quiere recordar los datos-->
+                <div class="mb-3">
+                    <p:selectBooleanCheckbox id="recuerdame" value="#{InicioSesionControl.recordarDatos}" />
+                    <h:outputLabel for="recuerdame" value="Recordar datos" />
+                </div>
+
+                <!--Boton final para iniciar sesion-->
+                <p:commandButton class="w-100 btn btn-lg btn-primary" value="Iniciar Sesión" action="#{InicioSesionControl.login()}" ajax="false" id="boton_enviar"/>
+
+                <div class="text-center">
+                    <h:outputText value="© 2023-2024" styleClass="mt-5 mb-3 text-muted" />
+                </div>
+
+        </h:form>
+    </div>
+
+    </ui:define>
+
+</ui:composition>
+
+</html>

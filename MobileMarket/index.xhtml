@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      lang="es"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/WEB-INF/Template/plantillaGeneral.xhtml">
+
+        <ui:define name="enlaces">
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 text-secondary">Pagina principal</a></li>
+                <li><a href="subasta/busqueda.xhtml" class="nav-link px-2 text-white">Busqueda</a></li>
+                <li><a href="subasta/verSubastas.xhtml" class="nav-link px-2 text-white">Ver tus subastas</a></li>
+            </ul>
+
+        </ui:define>
+
+        <ui:define name="cuerpo">
+
+            <h1 class="text-center">Subastas destacadas</h1>
+
+            <h:form>
+                <p:dataView var="phone" value="#{busquedaCtrl.moviles_destacados}" rows="10" paginator="true" layout="grid"
+                            gridIcon="pi pi-th-large" rendered="#{not empty busquedaCtrl.moviles_destacados}">
+                    <!--                            paginatorTemplate=" {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">-->
+                    <p:dataViewGridItem>
+                        <p:column styleClass="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <h5 class="card-title">#{phone.marca} #{phone.modelo}</h5>
+                                    <p:imageSwitch effect="fade" id="fadeEffect">
+                                        <ui:repeat value="#{busquedaCtrl.obtenImagenesSubasta( phone )}" var="image" id="fadeEffectImages">
+                                            <h:graphicImage url="#{image}" id="image2" alt="imagen" style="max-width: 100px; max-height: 100px;" />
+                                        </ui:repeat>
+                                    </p:imageSwitch>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">#{phone.capacidadBateria}Ma de bateria</li>
+                                        <li class="list-group-item">Carga de #{phone.velocidadCarga}W</li>
+                                        <li class="list-group-item">Pantalla #{phone.tecnologiaPantalla} de #{phone.tasaRefresco}Hz</li>
+                                        <li class="list-group-item">Con un procesador de #{phone.numProcesadores} nucleos</li>
+                                        <li class="list-group-item">#{phone.capacidadAlmacenamiento}GB de almacenamiento</li>
+                                        <li class="list-group-item">#{phone.capacidadRAM}GB de memoria RAM</li>
+                                        <li class="list-group-item">Precio de #{phone.precioCompra}€</li>
+                                        <li class="list-group-item">Puja de #{phone.precioActual}€</li>
+                                    </ul>
+
+                                    <p:commandButton value="Subasta"
+                                                     icon="pi pi-chevron-circle-right"
+                                                     iconPos="right"
+                                                     action="#{busquedaCtrl.buscar()}"
+                                                     actionListener="#{busquedaCtrl.redirectSubasta(phone)}">
+                                    </p:commandButton>
+
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:dataViewGridItem>
+                </p:dataView>
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+
+</html>

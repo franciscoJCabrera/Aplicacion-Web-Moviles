@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/Template/plantillaGeneral.xhtml">
+
+    <ui:define name="script">
+        <h:outputScript library="js" name="movil_verificador.js"/>
+    </ui:define>
+
+    <ui:define name="enlaces">
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="../index.xhtml" class="nav-link px-2 text-white">Pagina principal</a></li>
+            <li><a href="busqueda.xhtml" class="nav-link px-2 text-white">Busqueda</a></li>
+            <li><a href="verSubastas.xhtml" class="nav-link px-2 text-secondary">Ver tus subastas</a></li>
+        </ul>
+
+    </ui:define>
+
+    <ui:define name="cuerpo">
+
+        <div class="container-flex">
+
+            <div class="card crud-demo">
+                <h:form id="form">
+                    <p:growl id="messages" showDetail="false" />
+
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{crudView.openNew}"
+                                             update=":dialogs:manage-product-content" oncomplete="PF('manageProductDialog').show()"
+                                             styleClass="ui-button-success" style="margin-right: .5rem">
+                                <p:resetInput target=":dialogs:manage-product-content" />
+                            </p:commandButton>
+                            <p:commandButton id="delete-products-button" value="#{crudView.deleteButtonMessage}"
+                                             icon="pi pi-trash" actionListener="#{crudView.deleteSelectedMoviles}"
+                                             styleClass="ui-button-danger" disabled="#{!crudView.hasSelectedMoviles()}" update="@this">
+                                <p:confirm header="Confirmacion" message="¿Borrar los productos seleccionados?"
+                                           icon="pi pi-exclamation-triangle" />
+                            </p:commandButton>
+                        </p:toolbarGroup>
+
+                    </p:toolbar>
+
+                    <p:dataTable id="dt-products" widgetVar="dtProducts" var="product" value="#{crudView.moviles}"
+                                 reflow="true" styleClass="products-table" selection="#{crudView.selectedmoviles}"
+                                 rowKey="#{product.id}" paginator="true" rows="10" rowSelectMode="add" >
+                        <f:facet name="header">
+                            <div class="flex justify-content-between align-items-center">
+<!--                                <span style="font-weight: bold">PRODUCTS</span>-->
+                                <span class="filter-container ui-input-icon-left"> <i class="pi pi-search" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search" />
+
+                                    <p:commandButton id="toggler" type="button" value="Columnas" icon="pi pi-align-justify"/>
+                                    <p:columnToggler datasource="dt-products" trigger="toggler" >
+                                        <p:ajax />
+                                    </p:columnToggler>
+
+                                </span>
+
+                            </div>
+                        </f:facet>
+
+                        <p:ajax event="rowSelect" update=":form:delete-products-button" />
+                        <p:ajax event="rowUnselect" update=":form:delete-products-button" />
+                        <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button" />
+                        <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button" />
+                        <p:ajax event="toggleSelect" update=":form:delete-products-button" />
+
+                        <p:column selectionMode="multiple" exportable="false" toggleable="false"/>
+
+                        <p:column headerText="Id" sortBy="#{product.id}">
+                            <h:outputText value="#{product.id}" />
+                        </p:column>
+
+                        <p:column headerText="Marca y modelo" sortBy="#{product.marca} #{product.modelo}" filterBy="#{product.marca} #{product.modelo}">
+                            <h:outputText value="#{product.marca} #{product.modelo}" />
+                        </p:column>
+
+                        <p:column headerText="Imagenes" exportable="false">
+                            <p:imageSwitch effect="fade" id="fadeEffect">
+                                <ui:repeat value="#{crudView.obtenerImagenes( product )}" var="image" id="fadeEffectImages">
+                                    <p:graphicImage value="#{image}" id="image2" alt="imagen" style="max-width: 100px; max-height: 100px;" />
+                                </ui:repeat>
+
+                            </p:imageSwitch>
+                        </p:column>
+
+                        <p:column headerText="Precio pedido" sortBy="#{product.precioCompra}">
+                            <h:outputText value="#{product.precioCompra}" style="font-weight: 700">
+                                <f:convertNumber currencySymbol="€" type="currency" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Puja más alta" sortBy="#{product.precioActual}">
+                            <h:outputText value="#{product.precioActual}" style="font-weight: 700">
+                                <f:convertNumber currencySymbol="€" type="currency" />
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="Correo usuario" sortBy="#{product.correoUsuario}">
+                            <h:outputText value="#{product.correoUsuario}" />
+                        </p:column>
+
+                        <p:column headerText="Bateria" sortBy="#{product.capacidadBateria}">
+                            <h:outputText value="#{product.capacidadBateria}" />
+                        </p:column>
+
+                        <p:column headerText="Carga" sortBy="#{product.velocidadCarga}">
+                            <h:outputText value="#{product.velocidadCarga}W" />
+                        </p:column>
+
+                        <p:column headerText="Pantalla" sortBy="#{product.tecnologiaPantalla}">
+                            <h:outputText value="#{product.tecnologiaPantalla}" />
+                        </p:column>
+
+                        <p:column headerText="Refresco" sortBy="#{product.tasaRefresco}">
+                            <h:outputText value="#{product.tasaRefresco}Hz" />
+                        </p:column>
+
+                        <p:column headerText="Procesadores" sortBy="#{product.numProcesadores}">
+                            <h:outputText value="#{product.numProcesadores}" />
+                        </p:column>
+
+                        <p:column headerText="Almacenamiento" sortBy="#{product.capacidadAlmacenamiento}">
+                            <h:outputText value="#{product.capacidadAlmacenamiento}GB" />
+                        </p:column>
+
+                        <p:column headerText="RAM" sortBy="#{product.capacidadRAM}">
+                            <h:outputText value="#{product.capacidadRAM}GB" />
+                        </p:column>
+
+                        <p:column headerText="Visitas" sortBy="#{product.numVisitas}">
+                            <h:outputText value="#{product.numVisitas}" />
+                        </p:column>
+
+<!--                        <p:column headerText="¿Es subasta?" sortBy="#{product.subasta}">-->
+<!--                            <p:toggleSwitch value="#{product.subasta}" onIcon="pi pi-check" offIcon="pi pi-times" disabled="true"/>-->
+<!--                        </p:column>-->
+
+                        <p:column exportable="false" toggleable="false">
+                            <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-product-content" actionListener="#{crudView.editingPhone()}"
+                                             oncomplete="PF('manageProductDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{product}" target="#{crudView.selectedmovil}" />
+                                <p:resetInput target=":dialogs:manage-product-content" />
+                            </p:commandButton>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                             process="@this"
+                                             oncomplete="PF('deleteProductDialog').show()">
+                                <f:setPropertyActionListener value="#{product}" target="#{crudView.selectedmovil}" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+                <!--Ventana de producto-->
+                <div class="card">
+
+                    <h:form id="dialogs" enctype="multipart/form-data">
+                        <p:dialog header="Detalles del producto" showEffect="fade" modal="true" widgetVar="manageProductDialog"
+                                  responsive="true" minimizable="false" maximizable="true" resizable="false" scrollable="true" width="80%" fitViewport="true">
+                            <p:outputPanel id="manage-product-content" class="ui-fluid" scrollable="true" >
+                                <p:panelGrid columns="4"
+                                             layout="grid"
+                                             rendered="#{not empty crudView.selectedmovil}"
+                                             styleClass="ui-panelgrid-blank ui-fluid"
+                                             style="border:0 none; background-color:transparent;"
+                                             columnClasses="ui-grid-col-8,ui-grid-col-8,ui-grid-col-4,ui-grid-col-8"
+                                             scrollable="true"
+                                >
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="marca">Marca</p:outputLabel>
+                                            <p:inputText id="marca" value="#{crudView.selectedmovil.marca}" required="true"
+                                            requiredMessage="Poner la marca del dispositivo es obligatorio"/>
+                                            <div id="error_marca">
+                                            </div>
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="modelo">Modelo</p:outputLabel>
+
+                                            <p:inputText id="modelo" value="#{crudView.selectedmovil.modelo}" required="true"
+                                             requiredMessage="El modelo del dispositivo es obligatorio" />
+
+                                            <div id="error_modelo">
+                                            </div>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row >
+                                        <p:column colspan="2" class="ui-panelgrid-cell ui-grid-col-12">
+                                            <p:outputLabel for="imagenes">Imagenes</p:outputLabel>
+
+                                            <p:fileUpload id="imagenes"
+                                                          listener="#{crudView.gestionaImagenes}"
+                                                          multiple="true"
+                                                          mode="advanced"
+                                                          fileLimit="5"
+                                                          dragDropSupport="true"
+                                                          allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                                          invalidFileMessage="Solo se permite jpg, jpeg or png"
+                                                          style="width:100%"
+                                                          colspan="4"
+                                            />
+                                        </p:column>
+                                        <p:column colspan="1" rendered="#{ not crudView.addingPhone }" class="ui-panelgrid-cell ui-grid-col-1">
+
+                                            <p:outputLabel rendered="#{ not crudView.addingPhone }" for="borra_images">¿Borrar imágenes anteriores?</p:outputLabel>
+                                            <p:toggleSwitch id="borra_images" rendered="#{ not crudView.addingPhone }" value="#{crudView.deleteOldImages}" onIcon="pi pi-check" offIcon="pi pi-times" />
+                                        </p:column>
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="bateria">Bateria</p:outputLabel>
+                                            <p:inputNumber id="bateria" value="#{crudView.selectedmovil.capacidadBateria}" required="true"
+                                            requiredMessage="La capacidad de la bateria (en Ma) es un dato obligatorio"/>
+                                            <div id="error_bateria">
+                                            </div>
+
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="carga">Velocidad de carga</p:outputLabel>
+                                            <p:inputNumber id="carga" value="#{crudView.selectedmovil.velocidadCarga}" required="true"
+                                            requiredMessage="La velocidad de carga (en W) es un dato obligatorio" />
+                                            <div id="error_carga">
+                                            </div>
+                                        </p:column>
+
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="@next">Pantalla</p:outputLabel>
+                                            <p:inputText id="pantalla" value="#{crudView.selectedmovil.tecnologiaPantalla}" required="true"
+                                            requiredMessage="La tecnología de la pantalla es un dato obligatorio"/>
+                                            <div id="error_pantalla">
+                                            </div>
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="@next">Tasa de refreco</p:outputLabel>
+                                            <p:inputNumber id="refresto" value="#{crudView.selectedmovil.tasaRefresco}" required="true"
+                                               requiredMessage="La tasa de refresco de la pantalla es un dato obligatorio" />
+                                            <div id="error_tasa_refresco">
+                                            </div>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="@next">Numero de CPUs</p:outputLabel>
+                                            <p:inputNumber id="cpu" value="#{crudView.selectedmovil.numProcesadores}" required="true"
+                                       requiredMessage="El numero de CPUs es un dato obligatorio" />
+                                            <div id="error_num_proc">
+                                            </div>
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:outputLabel for="@next">Almacenamiento</p:outputLabel>
+                                            <p:inputNumber id="almacenamiento" value="#{crudView.selectedmovil.capacidadAlmacenamiento}" required="true"
+                                               requiredMessage="La capacidad de almacenamiento (en GB) es un dato obligatorio" />
+                                            <div id="error_almacenamiento">
+                                            </div>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="2">
+
+                                            <p:outputLabel for="@next">Memoria RAM</p:outputLabel>
+                                            <p:inputNumber id="ram" value="#{crudView.selectedmovil.capacidadRAM}" required="true"
+                                                           requiredMessage="La capacidad de memoria RAM (en GB) es un dato obligatorio" />
+                                            <div id="error_ram">
+                                            </div>
+                                        </p:column>
+                                        <p:column colspan="2">
+
+                                            <p:outputLabel for="@next">Precio esperado</p:outputLabel>
+                                            <p:inputNumber id="precio" value="#{crudView.selectedmovil.precioCompra}" required="true"
+                                                           requiredMessage="El precio de venta tiene que ser obligatorio" />
+                                            <div id="error_precio">
+                                            </div>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:inputNumber id="id_movil" value="#{crudView.selectedmovil.id}" style="display: none;"/>
+                                    <p:inputText id="correo_subasta" value="#{crudView.selectedmovil.correoUsuario}" style="display: none"/>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{crudView.saveMovil()}"
+                                                 update=":form:dt-products form:messages" process="manage-product-content @this"
+                                                 ajax="false" id="boton_guardar"/>
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageProductDialog').hide()"
+                                                 class="ui-button-secondary" type="button" />
+                            </f:facet>
+                        </p:dialog>
+
+                        <p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade" width="300"
+                                         message="Eliminar la subasta?" header="Confirmación" severity="warn">
+                            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{crudView.deleteMovil()}"
+                                             process="@this" update=":form:delete-products-button"
+                                             oncomplete="PF('deleteProductDialog').hide()" />
+                            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('deleteProductDialog').hide()" />
+                        </p:confirmDialog>
+
+                        <p:confirmDialog global="true" showEffect="fade" width="300">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                                             icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </h:form>
+
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+
+</ui:composition>
+
+</html>
