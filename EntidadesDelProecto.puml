@@ -1,0 +1,18 @@
+@startuml
+entity Usuario {
+    * dni: string
+    * nombre: string
+    * correo: string
+    * telefono: int
+    * cuenta_bancaria: string
+}
+entity Movil {
+    * id: int <<generated>>
+    * marca: string
+    * modelo: string
+    * precio_inicial: int
+    * precio_actual: int
+}
+
+Usuario --|{ Movil
+@enduml
